@@ -92,6 +92,7 @@ class _Screen1State extends State<Screen1> {
                 Text('Forgot Password',style: TextStyle(
                     color: Colors.blueGrey,
                     fontSize: 18,fontWeight: FontWeight.w600),)
+
               ],
             )
 
