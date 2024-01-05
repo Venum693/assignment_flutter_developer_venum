@@ -1,4 +1,11 @@
+
+import 'dart:convert';
+
+import 'package:assignment_flutter_developer_venum/screen2.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:crypto/crypto.dart';
+import 'package:flutter_social_button/flutter_social_button.dart';
 
 class Screen1 extends StatefulWidget {
   const Screen1({super.key});
@@ -11,92 +18,279 @@ class _Screen1State extends State<Screen1> {
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   bool isChecked = false;
+  bool isSubmit = false;
 
+  String? _validateEmail(String value) {
+    // Regular expression for a valid email format
+    String pattern = r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$';
+    RegExp regExp = RegExp(pattern);
 
+    if (!regExp.hasMatch(value)) {
+      return 'Enter a valid email address';
+    }
+
+    return null;
+  }
+
+  Future<void> _login() async {
+    if (_formKey.currentState!.validate()) {
+      final String apiEndpoint = 'https://apiv2stg.promilo.com/user/oauth/token';
+      // final String clientId = 'test45@yopmail.com'; //
+      // final String clientSecret = 'Test@123'; // Replace with your actual client secret
+      //
+      // final String basicAuth =
+      //     'Basic ${base64Encode(utf8.encode('$clientId:$clientSecret'))}';
+      //
+      // final String email = _emailController.text;
+      // final String password = _passwordController.text;
+      // final String hashedPassword = 'SHA256_HASH_HERE'; //
+      String email = _emailController.text;
+      String password = _passwordController.text;
+
+      // Hash the password using SHA-256
+      var bytes = utf8.encode(password);
+      var digest = sha256.convert(bytes);
+      String hashedPassword = digest.toString();
+
+      final Map<String, String> data = {
+        'username': email,
+        'password': hashedPassword,
+        'grant_type': 'password',
+      };
+
+      try {
+        final response = await http.post(
+          Uri.parse(apiEndpoint),
+          headers: {
+            "Authorization": "Basic UHJvbWlsbzpxNCE1NkBaeSN4MiRHQg=="
+          },
+          body: data,
+        );
+
+        if (response.statusCode == 200) {
+          print('Login successful: ${response.body}');
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('Login Successful'),
+              ),
+              backgroundColor: Colors.green,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)
+              ),
+            ),
+          );
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Screen2(),  // Specify the new page to navigate to
+            ),
+          );
+
+        } else {
+          print('Login failed: ${response.body}');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('Invalid ID Password'),
+              ),
+              backgroundColor: Colors.red,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10)
+              ),
+            ),
+          );
+        }
+      } catch (e) {
+        print('Error: $e');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('An error occurred. Please try again.'),
+          ),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('promilo',style: TextStyle(
-                color: Colors.black,
-                fontSize: 18,fontWeight: FontWeight.w600),),
-            Center(
-                child: Text('Hi, Welcome Back!',style: TextStyle(
-                color: Colors.indigo,
-                fontSize: 20,fontWeight: FontWeight.w600))),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text('Please Sign in to continue',style: TextStyle(
-                  color: Colors.blueGrey,
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('promilo',style: TextStyle(
+                  color: Colors.black,
                   fontSize: 18,fontWeight: FontWeight.w600),),
-            ),
-
-            TextFormField(
-              controller: _emailController,
-              decoration: InputDecoration(
-                labelText: 'Enter Email or Mob no.',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10)
-                )
-              ),
-            ),
-
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text('Sign in With OTP',style: TextStyle(
-                  color: Colors.blueGrey,
-                  fontSize: 18,fontWeight: FontWeight.w600),),
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text('Password',style: TextStyle(
-                  color: Colors.blueGrey,
-                  fontSize: 18,fontWeight: FontWeight.w600),),
-            ),
-            TextFormField(
-              controller: _passwordController,
-              decoration: InputDecoration(
-                  labelText: 'Enter password',
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10)
-                  )
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  child: Row(
-                    children: [
-                      Checkbox(
-                        value: isChecked,
-                        onChanged: (value) {
-                          setState(() {
-                            isChecked = value!;
-                          });
-                        },
-                      ),
-                      Text('Remember me',style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 16,),),
-                    ],
-                  ),
-                ),
-
-                Text('Forgot Password',style: TextStyle(
+              Center(
+                  child: Text('Hi, Welcome Back!',style: TextStyle(
+                  color: Colors.indigo,
+                  fontSize: 20,fontWeight: FontWeight.w600))),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text('Please Sign in to continue',style: TextStyle(
                     color: Colors.blueGrey,
-                    fontSize: 18,fontWeight: FontWeight.w600),)
+                    fontSize: 18,fontWeight: FontWeight.w600),),
+              ),
 
-              ],
-            )
+              TextFormField(
+                controller: _emailController,
+                decoration: InputDecoration(
+                  labelText: 'Enter Email or Mob no.',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10)
+                  )
+                ),
+                validator: (value) => _validateEmail(value!),
+              ),
 
-          ],
+              Align(
+                alignment: Alignment.centerRight,
+                child: Text('Sign in With OTP',style: TextStyle(
+                    color: Colors.blueGrey,
+                    fontSize: 18,fontWeight: FontWeight.w600),),
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text('Password',style: TextStyle(
+                    color: Colors.blueGrey,
+                    fontSize: 18,fontWeight: FontWeight.w600),),
+              ),
+              TextFormField(
+                controller: _passwordController,
+                decoration: InputDecoration(
+                    labelText: 'Enter password',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10)
+                    )
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    child: Row(
+                      children: [
+                        Checkbox(
+                          value: isChecked,
+
+                          onChanged: (value) {
+                            setState(() {
+                              isChecked = value!;
+                            });
+                          },
+                        ),
+                        Text('Remember me',style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 16,),),
+                      ],
+                    ),
+                  ),
+
+                  Text('Forgot Password',style: TextStyle(
+                      color: Colors.blueGrey,
+                      fontSize: 18,fontWeight: FontWeight.w600),)
+
+                ],
+              ),
+              ElevatedButton(
+                onPressed: () async{
+
+                  setState(() {
+                    isSubmit = true;
+                  });
+
+                  FocusScope.of(context).unfocus();
+
+                  if (_formKey.currentState!.validate()) {
+                    print('Email: ${_emailController.text}');
+                  }
+
+                  await _login();
+
+                },
+                  child: Text('Submit',style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,fontWeight: FontWeight.w600)),
+                style: ElevatedButton.styleFrom(
+                  side: BorderSide(color: Colors.blue,width: 2),
+                  backgroundColor: isSubmit ? Colors.blueGrey.withOpacity(0.1) : Colors.indigo,
+
+                  minimumSize: Size(double.infinity, 55),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  )
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width / 2.5,
+                    child: Divider(
+                      // Customize divider properties as needed
+                      thickness: 1.0,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Text('or',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
+                  Container(
+                    width: MediaQuery.of(context).size.width / 3,
+                    child: Divider(
+                      // Customize divider properties as needed
+                      thickness: 1.0,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  FlutterSocialButton(
+                    onTap: () {},
+                    mini: true,
+                    buttonType: ButtonType.google,
+                  ),
+
+                  FlutterSocialButton(
+                    onTap: () {},
+                    mini: true,
+                    buttonType: ButtonType.linkedin,
+                  ),
+                  FlutterSocialButton(
+                    onTap: () {},
+                    mini: true,
+                    buttonType: ButtonType.facebook,
+                  ),
+                  FlutterSocialButton(
+                    onTap: () {},
+                    mini: true,
+                    buttonType: ButtonType.twitter,
+                  ),
+                  FlutterSocialButton(
+                    onTap: () {},
+                    mini: true,
+                    buttonType: ButtonType.whatsapp,
+                  ),
+
+
+                ],
+              )
+
+            ],
+          ),
         ),
       )
     );
