@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:signed_spacing_flex/signed_spacing_flex.dart';
+
 
 class Screen2 extends StatefulWidget {
   const Screen2({super.key});
@@ -15,7 +17,7 @@ class _Screen2State extends State<Screen2> {
 
   final _assetImages = [
     'assets/images/image1.png', // Replace with your asset paths
-    'assets/images/image2.png',
+    'assets/images/image5.png',
     'assets/images/image3.png',
   ];
 
@@ -107,14 +109,17 @@ class _Screen2State extends State<Screen2> {
                   color: Colors.blueGrey,
                   fontSize: 18,fontWeight: FontWeight.w600)),
             ),
-            ListView(
-              scrollDirection: Axis.horizontal, // Scroll horizontally
-              children: [
-                _buildCard(Colors.blue, 'Card 1'),
-                _buildCard(Colors.green, 'Card 2'),
-                _buildCard(Colors.purple, 'Card 3'),
-                // Add more cards as needed
-              ],
+            Container(
+              height: 150,
+              child: ListView(
+                scrollDirection: Axis.horizontal, // Scroll horizontally
+                children: [
+                  _buildCard( 'Author',1028),
+                  _buildCard('Reader',7220),
+                  _buildCard('Editor',10080),
+                  // Add more cards as needed
+                ],
+              ),
             )
 
           ],
@@ -135,16 +140,90 @@ class _Screen2State extends State<Screen2> {
     );
   }
 
-  Widget _buildCard(Color color, String title) {
+  Widget _buildCard( String title, int numbers) {
     return Card(
-      color: color,
-      child: Container(
-        width: 200, // Adjust card width as desired
-        padding: EdgeInsets.all(16),
-        child: Center(
-          child: Text(title, style: TextStyle(fontSize: 20)),
+    color: Colors.white,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10),
+      side: BorderSide(color: Colors.grey)
+    ),
+
+    child: Container(
+      width: 250, // Adjust card width as desired
+      //padding: EdgeInsets.all(16),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CircleAvatar(
+                    radius: 21,
+                    backgroundColor: Colors.blueGrey,
+                    child: CircleAvatar(
+                      radius: 20,
+                      backgroundColor: Colors.white,
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: Icon(Icons.auto_fix_normal_outlined),
+                      ),
+                    ),
+                  ),
+                ),
+                Column(
+                  //mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(title,style: TextStyle(
+                        color: Colors.blueGrey.shade900,
+                        fontSize: 18,fontWeight: FontWeight.w500)),
+                    Text("$numbers meetups",style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,fontWeight: FontWeight.w500))
+                  ],
+                )
+              ],
+            ),
+            Divider(color: Colors.grey,thickness: 1),
+            SignedSpacingRow(
+              spacing: -16.0,
+              stackingOrder: StackingOrder.firstOnTop,
+              children: const [
+                CircleAvatar(
+                  radius: 25,
+                  backgroundImage: AssetImage('assets/images/image4.png'),
+                ),
+                CircleAvatar(
+                  radius: 25,
+                  backgroundImage: AssetImage('assets/images/image7.png'),
+                ),
+                CircleAvatar(
+                  radius: 25,
+                  backgroundImage: AssetImage('assets/images/image2.png'),
+                ),
+                CircleAvatar(
+                  radius: 25,
+                  backgroundImage: AssetImage('assets/images/image6.png'),
+                ),
+                CircleAvatar(
+                  radius: 25,
+                  backgroundImage: AssetImage('assets/images/image8.png'),
+                )
+              ],
+            ),
+
+            Stack(
+
+              children: [
+
+              ],
+            )
+          ],
         ),
-      ),
-    );
+      )
+    ),
+        );
   }
 }
