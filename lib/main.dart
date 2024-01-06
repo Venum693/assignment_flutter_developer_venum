@@ -1,4 +1,5 @@
 import 'package:assignment_flutter_developer_venum/screen1.dart';
+import 'package:assignment_flutter_developer_venum/screen2.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: Screen1(),
+      home: Screen2(),
     );
   }
 }

@@ -77,7 +77,11 @@ class _Screen1State extends State<Screen1> {
             SnackBar(
               content: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text('Login Successful'),
+                child: Center(
+                  child: Text('Login Successful',style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,fontWeight: FontWeight.w600)),
+                ),
               ),
               backgroundColor: Colors.green,
               shape: RoundedRectangleBorder(
@@ -99,7 +103,11 @@ class _Screen1State extends State<Screen1> {
             SnackBar(
               content: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text('Invalid ID Password'),
+                child: Center(
+                  child: Text('Invalid ID Password',style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,fontWeight: FontWeight.w600)),
+                ),
               ),
               backgroundColor: Colors.red,
               shape: RoundedRectangleBorder(
