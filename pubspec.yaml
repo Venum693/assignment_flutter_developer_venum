@@ -51,6 +51,9 @@ dev_dependencies:
   flutter_social_button: ^1.1.4+1
   signed_spacing_flex: ^1.1.0
   share_plus: ^7.2.1
+  path_provider: ^2.1.1
+  animated_rating_stars: ^1.0.1
+
 
 
 # For information on the generic Dart part of this file, see the

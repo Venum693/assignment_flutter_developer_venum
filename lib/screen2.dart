@@ -13,6 +13,9 @@ class Screen2 extends StatefulWidget {
 
 class _Screen2State extends State<Screen2> {
 
+  int _currentIndex = 0;// for bottom navigation bar
+
+
   final _pageController = PageController();
   int _currentPage = 0;
 
@@ -147,6 +150,39 @@ class _Screen2State extends State<Screen2> {
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        selectedItemColor: Colors.tealAccent,
+        unselectedItemColor: Colors.blueGrey,
+        showUnselectedLabels: true,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.api),
+            label: 'Prolet',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.handshake_outlined),
+            label: 'Meetup',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.content_paste_search_outlined),
+            label: 'Explpore',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Account',
+          ),
+        ],
       ),
     );
   }
@@ -297,7 +333,7 @@ class _Screen2State extends State<Screen2> {
                     ),
                     child: Center(
                       child: Text(
-                        '$i',
+                        '0$i',
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,

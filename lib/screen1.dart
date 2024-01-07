@@ -21,7 +21,7 @@ class _Screen1State extends State<Screen1> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   bool isChecked = false;
-  bool isSubmit = false;
+  bool _isSubmitEnabled = false;
 
   String? _validateEmail(String value) {
     // Regular expression for a valid email format
@@ -165,6 +165,7 @@ class _Screen1State extends State<Screen1> {
                     )
                   ),
                   validator: (value) => _validateEmail(value!),
+                  onChanged: _updateSubmitButtonState,
                 ),
         
                 Align(
@@ -188,6 +189,7 @@ class _Screen1State extends State<Screen1> {
                           borderRadius: BorderRadius.circular(10)
                       )
                   ),
+                  onChanged: _updateSubmitButtonState,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -220,10 +222,6 @@ class _Screen1State extends State<Screen1> {
                 ElevatedButton(
                   onPressed: () async{
         
-                    setState(() {
-                      isSubmit = true;
-                    });
-        
                     FocusScope.of(context).unfocus();
         
                     if (_formKey.currentState!.validate()) {
@@ -238,7 +236,7 @@ class _Screen1State extends State<Screen1> {
                         fontSize: 18,fontWeight: FontWeight.w600)),
                   style: ElevatedButton.styleFrom(
                     side: BorderSide(color: Colors.blue,width: 2),
-                    backgroundColor: isSubmit ? Colors.blueGrey.withOpacity(0.1) : Colors.indigo,
+                    backgroundColor: _isSubmitEnabled ? Colors.indigo : Colors.blueGrey.shade200,
         
                     minimumSize: Size(double.infinity, 55),
                     shape: RoundedRectangleBorder(
@@ -349,4 +347,13 @@ class _Screen1State extends State<Screen1> {
       )
     );
   }
+
+
+  void _updateSubmitButtonState(String _) {
+    setState(() {
+      _isSubmitEnabled =
+          _validateEmail(_emailController.text) == null && _passwordController.text.isNotEmpty;
+    });
+  }
+
 }
