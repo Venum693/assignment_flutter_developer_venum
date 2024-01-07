@@ -52,7 +52,7 @@ class _Screen1State extends State<Screen1> {
 
       // Hash the password using SHA-256
       var bytes = utf8.encode(password);
-      var digest = sha256.convert(bytes);
+      var digest = sha256.convert(bytes); //The user's password are hashed using SHA-256 before being sent in the request.
       String hashedPassword = digest.toString();
 
       final Map<String, String> data = {
@@ -61,6 +61,7 @@ class _Screen1State extends State<Screen1> {
         'grant_type': 'password',
       };
 
+      //using http post
       try {
         final response = await http.post(
           Uri.parse(apiEndpoint),
@@ -75,8 +76,8 @@ class _Screen1State extends State<Screen1> {
 
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Padding(
-                padding: const EdgeInsets.all(8.0),
+              content: const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: Center(
                   child: Text('Login Successful',style: TextStyle(
                       color: Colors.black,
@@ -93,16 +94,18 @@ class _Screen1State extends State<Screen1> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => Screen2(),  // Specify the new page to navigate to
+              builder: (context) => Screen2(),  // navigate to second screen
             ),
           );
 
         } else {
           print('Login failed: ${response.body}');
+
+          //snackbar message
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Padding(
-                padding: const EdgeInsets.all(8.0),
+              content: const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: Center(
                   child: Text('Invalid ID Password',style: TextStyle(
                       color: Colors.white,
@@ -119,7 +122,7 @@ class _Screen1State extends State<Screen1> {
       } catch (e) {
         print('Error: $e');
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text('An error occurred. Please try again.'),
           ),
         );
@@ -138,23 +141,23 @@ class _Screen1State extends State<Screen1> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 22),
-                Text('promilo',style: TextStyle(
+                const SizedBox(height: 22),
+                const Text('promilo',style: TextStyle(
                     color: Colors.black,
                     fontSize: 18,fontWeight: FontWeight.w600),),
-                SizedBox(height: 20),
-                Center(
+                const SizedBox(height: 20),
+                const Center(
                     child: Text('Hi, Welcome Back!',style: TextStyle(
                     color: Colors.indigo,
                     fontSize: 20,fontWeight: FontWeight.w600))),
-                SizedBox(height: 15),
-                Align(
+                const SizedBox(height: 15),
+                const Align(
                   alignment: Alignment.centerLeft,
                   child: Text('Please Sign in to continue',style: TextStyle(
                       color: Colors.blueGrey,
                       fontSize: 18,fontWeight: FontWeight.w600),),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
         
                 TextFormField(
                   controller: _emailController,
@@ -168,19 +171,19 @@ class _Screen1State extends State<Screen1> {
                   onChanged: _updateSubmitButtonState,
                 ),
         
-                Align(
+                const Align(
                   alignment: Alignment.centerRight,
                   child: Text('Sign in With OTP',style: TextStyle(
                       color: Colors.blueGrey,
                       fontSize: 18,fontWeight: FontWeight.w600),),
                 ),
-                Align(
+                const Align(
                   alignment: Alignment.centerLeft,
                   child: Text('Password',style: TextStyle(
                       color: Colors.blueGrey,
                       fontSize: 18,fontWeight: FontWeight.w600),),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 TextFormField(
                   controller: _passwordController,
                   decoration: InputDecoration(
@@ -194,26 +197,24 @@ class _Screen1State extends State<Screen1> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      child: Row(
-                        children: [
-                          Checkbox(
-                            value: isChecked,
-        
-                            onChanged: (value) {
-                              setState(() {
-                                isChecked = value!;
-                              });
-                            },
-                          ),
-                          Text('Remember me',style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 16,),),
-                        ],
-                      ),
+                    Row(
+                      children: [
+                        Checkbox(
+                          value: isChecked,
+
+                          onChanged: (value) {
+                            setState(() {
+                              isChecked = value!;
+                            });
+                          },
+                        ),
+                        const Text('Remember me',style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 16,),),
+                      ],
                     ),
         
-                    Text('Forgot Password',style: TextStyle(
+                    const Text('Forgot Password',style: TextStyle(
                         color: Colors.blueGrey,
                         fontSize: 18,fontWeight: FontWeight.w600),)
         
@@ -222,44 +223,44 @@ class _Screen1State extends State<Screen1> {
                 ElevatedButton(
                   onPressed: () async{
         
-                    FocusScope.of(context).unfocus();
+                    FocusScope.of(context).unfocus();// dismisiing keypad
         
                     if (_formKey.currentState!.validate()) {
-                      print('Email: ${_emailController.text}');
+                      print('Email: ${_emailController.text}');// validating email
                     }
         
                     await _login();
         
                   },
-                    child: Text('Submit',style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,fontWeight: FontWeight.w600)),
                   style: ElevatedButton.styleFrom(
-                    side: BorderSide(color: Colors.blue,width: 2),
+                    side: const BorderSide(color: Colors.blue,width: 2),
                     backgroundColor: _isSubmitEnabled ? Colors.indigo : Colors.blueGrey.shade200,
         
-                    minimumSize: Size(double.infinity, 55),
+                    minimumSize: const Size(double.infinity, 55),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     )
                   ),
+                    child: const Text('Submit',style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,fontWeight: FontWeight.w600)),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Container(
+                    SizedBox(
                       width: MediaQuery.of(context).size.width / 2.5,
-                      child: Divider(
+                      child: const Divider(
                         // Customize divider properties as needed
                         thickness: 1.0,
                         color: Colors.grey,
                       ),
                     ),
-                    Text('or',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
-                    Container(
+                    const Text('or',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
+                    SizedBox(
                       width: MediaQuery.of(context).size.width / 3,
-                      child: Divider(
+                      child: const Divider(
                         // Customize divider properties as needed
                         thickness: 1.0,
                         color: Colors.grey,
@@ -267,7 +268,7 @@ class _Screen1State extends State<Screen1> {
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -301,8 +302,8 @@ class _Screen1State extends State<Screen1> {
         
                   ],
                 ),
-                SizedBox(height: 15),
-                Row(
+                const SizedBox(height: 15),
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text('Business User?',style: TextStyle(
@@ -313,7 +314,7 @@ class _Screen1State extends State<Screen1> {
                         fontSize: 16,fontWeight: FontWeight.w500),),
                   ],
                 ),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text('Login Here',style: TextStyle(
@@ -324,19 +325,19 @@ class _Screen1State extends State<Screen1> {
                         fontSize: 16,fontWeight: FontWeight.w500),),
                   ],
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(
                   children: <TextSpan>[
                     TextSpan(text: "By continuing, you agree to \n Promilo's ",
                         style: TextStyle(fontSize: 14,color: Colors.blueGrey.withOpacity(0.5))),
-                    TextSpan(text: "Terms of Use & Privacy Policy",
+                    const TextSpan(text: "Terms of Use & Privacy Policy",
                         style: TextStyle(fontSize: 15,color: Colors.black))
                   ]
                 ),
                 ),
-                Text(" ",style: TextStyle(
+                const Text(" ",style: TextStyle(
                     color: Colors.blue,
                     fontSize: 16,fontWeight: FontWeight.w500),),
         

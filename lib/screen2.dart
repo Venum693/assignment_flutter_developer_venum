@@ -20,9 +20,9 @@ class _Screen2State extends State<Screen2> {
   int _currentPage = 0;
 
   final _assetImages = [
-    'assets/images/image1.png', // Replace with your asset paths
+    'assets/images/image2.png', //  asset paths of images
     'assets/images/image5.png',
-    'assets/images/image3.png',
+    'assets/images/image8.png',
   ];
 
 
@@ -34,9 +34,9 @@ class _Screen2State extends State<Screen2> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(Icons.arrow_back_ios),
+          icon: const Icon(Icons.arrow_back_ios),
         ),
-        title: Text("Individual Meetup",
+        title: const Text("Individual Meetup",
           style: TextStyle(fontWeight: FontWeight.w500),),
       ),
       body: SingleChildScrollView(
@@ -46,10 +46,10 @@ class _Screen2State extends State<Screen2> {
             children: [
               TextField(
                 decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.search,size: 35),
-                  contentPadding: EdgeInsets.symmetric(vertical: 10),
+                  prefixIcon: const Icon(Icons.search,size: 35),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 10),
                   suffixIcon: IconButton(
-                    icon: Icon(Icons.mic,size: 35),
+                    icon: const Icon(Icons.mic,size: 35),
                     onPressed: () { }, // Implement voice search functionality
                   ),
                   hintText: 'Search',
@@ -58,9 +58,9 @@ class _Screen2State extends State<Screen2> {
                   ),
                 ),
               ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
             
-              Container(
+              SizedBox(
                 height: 200,
                 width: double.infinity,
                 child: PageView.builder(
@@ -71,22 +71,23 @@ class _Screen2State extends State<Screen2> {
                     return Stack(
                       alignment: Alignment.center,
                       children: [
-                        Container(
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(15),
-            
-                            child: Image.asset(
-                              _assetImages[index],
-                              fit: BoxFit.cover,
-                            ),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+
+                          child: Image.asset(
+                            _assetImages[index],
+                            fit: BoxFit.cover,
                           ),
-                        ),Padding(
-                          padding: const EdgeInsets.all(20.0),
+                        ),const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 30),
                           child: Align(
                             alignment: Alignment.bottomLeft,
-                            child: Text(" Popular Meetups \n in India",style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,fontWeight: FontWeight.w600)),
+                            child: Padding(
+                              padding: EdgeInsets.all(15.0),
+                              child: Text(" Popular Meetups \n in India",style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,fontWeight: FontWeight.w600)),
+                            ),
                           ),
                         )
                       ],
@@ -96,8 +97,8 @@ class _Screen2State extends State<Screen2> {
               ),
             
             
-              SizedBox(height: 10,),
-            
+              const SizedBox(height: 10,),
+            // dotted indicator
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(
@@ -106,15 +107,15 @@ class _Screen2State extends State<Screen2> {
                 ),
               ),
             
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
             
-              Align(
+              const Align(
                 alignment: Alignment.centerLeft,
                 child: Text("Trending Popular people",style: TextStyle(
                     color: Colors.blueGrey,
                     fontSize: 18,fontWeight: FontWeight.w600)),
               ),
-              Container(
+              SizedBox(
                 height: 200,
                 child: ListView(
                   scrollDirection: Axis.horizontal, // Scroll horizontally
@@ -126,14 +127,14 @@ class _Screen2State extends State<Screen2> {
                   ],
                 ),
               ),
-              Align(
+              const Align(
                 alignment: Alignment.centerLeft,
                 child: Text("Top Trending Meetups",style: TextStyle(
                     color: Colors.blueGrey,
                     fontSize: 18,fontWeight: FontWeight.w600)),
               ),
 
-              Container(
+              SizedBox(
                 height: 200,
                 child: ListView(
                   scrollDirection: Axis.horizontal, // Scroll horizontally
@@ -161,7 +162,7 @@ class _Screen2State extends State<Screen2> {
         selectedItemColor: Colors.tealAccent,
         unselectedItemColor: Colors.blueGrey,
         showUnselectedLabels: true,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
@@ -189,7 +190,7 @@ class _Screen2State extends State<Screen2> {
 
   Widget _buildDot(bool isActive) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 5),
       height: 10,
       width: 10,
       decoration: BoxDecoration(
@@ -204,10 +205,10 @@ class _Screen2State extends State<Screen2> {
     color: Colors.white,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10),
-      side: BorderSide(color: Colors.grey)
+      side: const BorderSide(color: Colors.grey)
     ),
 
-    child: Container(
+    child: SizedBox(
       width: 250, // Adjust card width as desired
       //padding: EdgeInsets.all(16),
       child: Padding(
@@ -238,14 +239,14 @@ class _Screen2State extends State<Screen2> {
                     Text(title,style: TextStyle(
                         color: Colors.blueGrey.shade900,
                         fontSize: 18,fontWeight: FontWeight.w500)),
-                    Text("$numbers meetups",style: TextStyle(
+                    Text("$numbers meetups",style: const TextStyle(
                         color: Colors.grey,
                         fontSize: 14,fontWeight: FontWeight.w500))
                   ],
                 )
               ],
             ),
-            Divider(color: Colors.grey,thickness: 1),
+            const Divider(color: Colors.grey,thickness: 1),
             SignedSpacingRow(
               spacing: -16.0,
               stackingOrder: StackingOrder.firstOnTop,
@@ -277,13 +278,13 @@ class _Screen2State extends State<Screen2> {
               alignment: Alignment.centerRight,
               child: ElevatedButton(
                 onPressed: (){},
-                child: Text("See more",style: TextStyle(color: Colors.white),),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)
                   )
                 ),
+                child: Text("See more",style: TextStyle(color: Colors.white),),
               )
             ),
 
@@ -297,6 +298,8 @@ class _Screen2State extends State<Screen2> {
   Widget _buildCardMeetups(int i) {
     return GestureDetector(
       onTap:  () {
+
+        // navigate to next screen by taking the present image
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -308,9 +311,9 @@ class _Screen2State extends State<Screen2> {
         color: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
-          side: BorderSide(color: Colors.grey),
+          side: const BorderSide(color: Colors.grey),
         ),
-        child: Container(
+        child: SizedBox(
           width: 200,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10), // Apply rounded corners
@@ -327,14 +330,14 @@ class _Screen2State extends State<Screen2> {
                   child: Container(
                     height: 50,
                     width: 50,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(topLeft: Radius.circular(10))
                     ),
                     child: Center(
                       child: Text(
                         '0$i',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
                           fontSize: 20,

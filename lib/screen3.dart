@@ -50,9 +50,9 @@ class _Screen3State extends State<Screen3> {
           onPressed: () {
             Navigator.pop(context); //moves back
           },
-          icon: Icon(Icons.arrow_back_ios),
+          icon: const Icon(Icons.arrow_back_ios),
         ),
-        title: Text("Description",
+        title: const Text("Description",
           style: TextStyle(fontWeight: FontWeight.w500),),
       ),
       body: SingleChildScrollView(
@@ -68,7 +68,7 @@ class _Screen3State extends State<Screen3> {
                   height: 250,
                   decoration: BoxDecoration(
                     color: Colors.grey.shade400,
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(15),
                       topRight: Radius.circular(15)
                     )
@@ -127,34 +127,35 @@ class _Screen3State extends State<Screen3> {
                         ),
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         //crossAxisAlignment: CrossAxisAlignment.center,
+
                         children: [
                           IconButton(
                               onPressed: (){},
-                              icon: Icon(Icons.file_download_outlined)
+                              icon: const Icon(Icons.file_download_outlined)
                           ),
                           IconButton(
                               onPressed: (){},
-                              icon: Icon(Icons.bookmark_border)
+                              icon: const Icon(Icons.bookmark_border)
                           ),
                           IconButton(
                               onPressed: (){},
-                              icon: Icon(Icons.favorite)
+                              icon: const Icon(Icons.favorite)
                           ),
                           IconButton(
                               onPressed: (){},
-                              icon: Icon(Icons.crop_free)
+                              icon: const Icon(Icons.crop_free)
                           ),
                           IconButton(
                               onPressed: (){},
-                              icon: Icon(Icons.star_border_purple500_sharp)
+                              icon: const Icon(Icons.star_border_purple500_sharp)
                           ),
                           IconButton(
                               onPressed: () async {
                                 await shareCurrentImage(); // calls the method that executes sharing of image
                               },
-                              icon: Icon(Icons.share)
+                              icon: const Icon(Icons.share)
                           ),
 
 
@@ -163,18 +164,19 @@ class _Screen3State extends State<Screen3> {
                     ],
                   ),
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
 
                 Row(
                   children: [
-                    Icon(Icons.bookmark_border,color: Colors.blue,),
-                    Text('1034',),
-                    SizedBox(width: 10),
-                    Icon(Icons.favorite_border_outlined,color: Colors.blue,),
-                    Text('1034',),
+                    const Icon(Icons.bookmark_border,color: Colors.blue,),
+                    const Text('1034',),
+                    const SizedBox(width: 10),
+                    const Icon(Icons.favorite_border_outlined,color: Colors.blue,),
+                    const Text('1034',),
 
-                    SizedBox(width: 10,),
+                    const SizedBox(width: 10,),
 
+                    // star rating
                     Container(
                       decoration: BoxDecoration(
                         color: Colors.grey.shade400,
@@ -203,32 +205,32 @@ class _Screen3State extends State<Screen3> {
                           customFilledIcon: Icons.star,
                           customHalfFilledIcon: Icons.star_half,
                           customEmptyIcon: Icons.star_border,
-                          starSize: 15.0,
+                          starSize: 12.0,
                           animationDuration: Duration(milliseconds: 300),
                           animationCurve: Curves.easeInOut,
                           readOnly: false,
                         ),
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    const SizedBox(width: 10,),
                     Text('$starRating',style: TextStyle(
                         color: Colors.lightBlue.shade900,fontSize: 18,fontWeight: FontWeight.w500
                     ),)
                   ],
                 ),
 
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
 
                 Text('Actor Name',style: TextStyle(
                   color: Colors.lightBlue.shade900,fontSize: 18,fontWeight: FontWeight.w600
                 ),),
 
-                Text('Indian Actress',style: TextStyle(
+                const Text('Indian Actress',style: TextStyle(
                   color: Colors.grey,
                     fontSize: 16,
                 ),),
-                SizedBox(height: 10,),
-                Row(
+                const SizedBox(height: 10,),
+                const Row(
                   children: [
                     Icon(Icons.access_time_filled,color: Colors.grey,),
                     Text(' Duration 20 Mins',style: TextStyle(
@@ -237,8 +239,8 @@ class _Screen3State extends State<Screen3> {
                     ),),
                   ],
                 ),
-                SizedBox(height: 10,),
-                Row(
+                const SizedBox(height: 10,),
+                const Row(
                   children: [
                     Icon(Icons.account_balance_wallet_sharp,color: Colors.grey,),
                     Text(' Total Average Fees ₹9,999',style: TextStyle(
@@ -247,17 +249,17 @@ class _Screen3State extends State<Screen3> {
                     ),),
                   ],
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 Text('About',style: TextStyle(
                     color: Colors.lightBlue.shade900,fontSize: 18,fontWeight: FontWeight.w600
                 ),),
-                SizedBox(height: 10,),
-                Text('From cardiovascular health to fitness, flexibility, balance, stress relief, better sleep, increased cognitive performance, and more, you can reap all of these benefits in just one session out on the waves. So, you may find yourself wondering what are the benefits of going on a surf camp.',
+                const SizedBox(height: 10,),
+                const Text('From cardiovascular health to fitness, flexibility, balance, stress relief, better sleep, increased cognitive performance, and more, you can reap all of these benefits in just one session out on the waves. So, you may find yourself wondering what are the benefits of going on a surf camp.',
                   style: TextStyle(
                   color: Colors.grey,
                   fontSize: 16,
                 ),),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
@@ -281,7 +283,7 @@ class _Screen3State extends State<Screen3> {
         selectedItemColor: Colors.tealAccent,
         unselectedItemColor: Colors.blueGrey,
         showUnselectedLabels: true,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
@@ -323,7 +325,7 @@ class _Screen3State extends State<Screen3> {
       // Share the image and wait for completion
       await Share.shareXFiles([XFile(path)], text: 'Great Pic : $_currentImageIndex');
 
-      // Optionally, you can clean up the temporary file after sharing
+      //  clean up the temporary file after sharing
       File(path).delete();
     } catch (e) {
       print('Error: $e');
